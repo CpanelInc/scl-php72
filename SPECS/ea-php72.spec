@@ -133,7 +133,7 @@
 %global db_devel  libdb-devel
 %endif
 
-%define ea_openssl_ver 1.0.2o-2
+%define ea_openssl_ver 1.1.1d-1
 %define ea_libcurl_ver 7.59.0-2
 
 Summary:  PHP scripting language for creating dynamic web sites
@@ -144,7 +144,7 @@ Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 Version:  7.2.26
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -192,8 +192,8 @@ Patch402: 0012-0022-PLESK-missed-kill.patch
 
 BuildRequires: bzip2-devel, %{ns_name}-libcurl >= %{ea_libcurl_ver}, %{ns_name}-libcurl-devel >= %{ea_libcurl_ver}, %{db_devel}
 BuildRequires: pam-devel
-Requires: ea-openssl >= %{ea_openssl_ver}
-BuildRequires: libstdc++-devel, ea-openssl >= %{ea_openssl_ver}, ea-openssl-devel >= %{ea_openssl_ver}, scl-utils-build
+Requires: ea-openssl11 >= %{ea_openssl_ver}
+BuildRequires: libstdc++-devel, ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}, scl-utils-build
 # For Argon2 support
 BuildRequires: ea-libargon2-devel
 Requires: ea-libargon2
@@ -530,8 +530,8 @@ License: PHP
 Provides: %{?scl_prefix}php-imap%{?_isa} = %{version}-%{release}
 Requires: %{?scl_prefix}php-common%{?_isa} = %{version}-%{release}
 Requires: %{?scl_prefix}libc-client%{?_isa}
-Requires: ea-openssl >= %{ea_openssl_ver}
-BuildRequires: krb5-devel%{?_isa}, ea-openssl >= %{ea_openssl_ver}, ea-openssl-devel >= %{ea_openssl_ver}
+Requires: ea-openssl11 >= %{ea_openssl_ver}
+BuildRequires: krb5-devel%{?_isa}, ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}
 BuildRequires: %{?scl_prefix}libc-client-devel%{?_isa}
 Conflicts: %{?scl_prefix}php-recode = %{version}-%{release}
 
@@ -546,8 +546,8 @@ Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: %{?scl_prefix}php-common%{?_isa} = %{version}-%{release}
-Requires: ea-openssl >= %{ea_openssl_ver}
-BuildRequires: cyrus-sasl-devel, openldap-devel, ea-openssl >= %{ea_openssl_ver}, ea-openssl-devel >= %{ea_openssl_ver}
+Requires: ea-openssl11 >= %{ea_openssl_ver}
+BuildRequires: cyrus-sasl-devel, openldap-devel, ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}
 
 %description ldap
 The %{?scl_prefix}php-ldap package adds Lightweight Directory Access Protocol (LDAP)
@@ -617,7 +617,7 @@ License: PHP
 Requires: %{?scl_prefix}php-pdo%{?_isa} = %{version}-%{release}
 Provides: %{?scl_prefix}php_database = %{version}-%{release}
 Provides: %{?scl_prefix}php-pdo_pgsql = %{version}-%{release}, %{?scl_prefix}php-pdo_pgsql%{?_isa} = %{version}-%{release}
-BuildRequires: krb5-devel, ea-openssl >= %{ea_openssl_ver}, ea-openssl-devel >= %{ea_openssl_ver}, postgresql-devel
+BuildRequires: krb5-devel, ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}, postgresql-devel
 
 %description pgsql
 The %{?scl_prefix}php-pgsql package add PostgreSQL database support to PHP.
@@ -1101,8 +1101,8 @@ touch configure.in
 CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign"
 export CFLAGS
 
-export SNMP_SHARED_LIBADD="-Wl,-rpath=/opt/cpanel/ea-openssl/%{_lib}"
-export CURL_SHARED_LIBADD="-Wl,-rpath=/opt/cpanel/ea-openssl/%{_lib} -Wl,-rpath=/opt/cpanel/ea-brotli/%{_lib}"
+export SNMP_SHARED_LIBADD="-Wl,-rpath=/opt/cpanel/ea-openssl11/%{_lib}"
+export CURL_SHARED_LIBADD="-Wl,-rpath=/opt/cpanel/ea-openssl11/%{_lib} -Wl,-rpath=/opt/cpanel/ea-brotli/%{_lib}"
 
 # Install extension modules in %{_libdir}/php/modules.
 EXTENSION_DIR=%{_libdir}/php/modules; export EXTENSION_DIR
@@ -1146,7 +1146,7 @@ ln -sf ../configure
     --with-gettext \
     --with-iconv \
     --with-jpeg-dir=%{_root_prefix} \
-    --with-openssl=/opt/cpanel/ea-openssl --with-openssl-dir=/opt/cpanel/ea-openssl \
+    --with-openssl=/opt/cpanel/ea-openssl11 --with-openssl-dir=/opt/cpanel/ea-openssl11 \
 %if %{with_pcre}
     --with-pcre-regex=%{_root_prefix} \
 %endif
@@ -1808,6 +1808,9 @@ fi
 
 
 %changelog
+* Thu Dec 19 2019 Daniel Muey <dan@cpanel.net> - 7.2.26-2
+- ZC-4361: Update ea-openssl requirement to v1.1.1 (ZC-5583)
+
 * Wed Dec 18 2019 Cory McIntire <cory@cpanel.net> - 7.2.26-1
 - EA-8797: Update scl-php72 from v7.2.25 to v7.2.26
 
