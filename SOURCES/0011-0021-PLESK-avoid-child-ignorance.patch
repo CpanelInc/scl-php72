@@ -1,4 +1,4 @@
-From 0e21a7a0c1d6a9984c4d40cbe94857b7e53d367d Mon Sep 17 00:00:00 2001
+From b7a1d4084cf1b12a3cc996428ffc8eb594096546 Mon Sep 17 00:00:00 2001
 From: Julian Brown <julian.brown@cpanel.net>
 Date: Tue, 7 May 2019 12:41:19 -0500
 Subject: [PATCH 11/12] 0021-PLESK-avoid-child-ignorance
@@ -119,5 +119,5 @@ index a18460f..b8c473c 100644
  
  extern const char *fpm_signal_names[NSIG + 1];
 -- 
-2.21.0
+2.24.1
 
