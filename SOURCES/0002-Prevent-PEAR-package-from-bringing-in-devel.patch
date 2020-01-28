@@ -1,4 +1,4 @@
-From eaa97180f1672883662977aa084f87a0cee6e478 Mon Sep 17 00:00:00 2001
+From ae462acf722fd990b09179452fa23945f0715a3a Mon Sep 17 00:00:00 2001
 From: Cory McIntire <cory@cpanel.net>
 Date: Fri, 2 Mar 2018 11:03:30 -0600
 Subject: [PATCH 02/12] Prevent PEAR package from bringing in devel
@@ -45,5 +45,5 @@ index afec191..3bcd5ab 100644
  
       phpize_check_build_files
 -- 
-2.21.0
+2.24.1
 
