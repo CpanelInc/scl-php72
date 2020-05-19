@@ -1,4 +1,4 @@
-From 21db73bb2f0e4fa4cd9c0b6ed68ad2f758a5d9b0 Mon Sep 17 00:00:00 2001
+From 188cb6d7437e9ef2f0384af04320be45e9f213ba Mon Sep 17 00:00:00 2001
 From: Cory McIntire <cory@cpanel.net>
 Date: Fri, 2 Mar 2018 11:03:30 -0600
 Subject: [PATCH 02/12] Prevent PEAR package from bringing in devel
