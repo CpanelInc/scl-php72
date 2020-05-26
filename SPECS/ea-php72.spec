@@ -144,7 +144,7 @@ Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 Version:  7.2.31
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 2
+%define release_prefix 3
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1851,6 +1851,9 @@ fi
 
 
 %changelog
+* Mon Jun 29 2020 Julian Brown <julian.brown@cpanel.net> - 7.2.31-3
+- ZC-6875: Build on C8
+
 * Wed Jun 10 2020 Tim Mullin <tim@cpanel.net> - 7.2.31-2
 - EA-9087: Fix PHP version in DSO description
 
