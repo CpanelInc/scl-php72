@@ -1240,7 +1240,6 @@ if test $? != 0; then
   tail -500 config.log
   : configure failed
   exit 1
-  k, 
 fi
 
 make %{?_smp_mflags}
