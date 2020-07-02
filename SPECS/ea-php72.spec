@@ -134,7 +134,13 @@
 %endif
 
 %define ea_openssl_ver 1.1.1d-1
+
+
+%if 0%{?rhel} >= 8
+%define libcurl_ver 7.61.0
+%else
 %define ea_libcurl_ver 7.68.0-2
+%endif
 
 Summary:  PHP scripting language for creating dynamic web sites
 %if %{with_httpd}
@@ -144,7 +150,7 @@ Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 Version:  7.2.31
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 2
+%define release_prefix 3
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -190,7 +196,15 @@ Patch400: 0010-0020-PLESK-sig-block-reexec.patch
 Patch401: 0011-0021-PLESK-avoid-child-ignorance.patch
 Patch402: 0012-0022-PLESK-missed-kill.patch
 
-BuildRequires: bzip2-devel, %{ns_name}-libcurl >= %{ea_libcurl_ver}, %{ns_name}-libcurl-devel >= %{ea_libcurl_ver}, %{db_devel}
+BuildRequires: bzip2-devel, %{db_devel}
+
+%if 0%{?rhel} >= 8
+BuildRequires: libcurl >= %{libcurl_ver}, libcurl-devel >= %{libcurl_ver}
+BuildRequires: brotli brotli-devel
+%else
+BuildRequires: %{ns_name}-libcurl >= %{ea_libcurl_ver}, %{ns_name}-libcurl-devel >= %{ea_libcurl_ver}
+%endif
+
 BuildRequires: pam-devel
 Requires: ea-openssl11 >= %{ea_openssl_ver}
 BuildRequires: libstdc++-devel, ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}, scl-utils-build
@@ -216,7 +230,12 @@ BuildRequires: pcre-devel >= 8.20
 BuildRequires: bzip2, perl, libtool >= 1.4.3, gcc-c++
 BuildRequires: libtool-ltdl-devel
 %if %{with_libzip}
+%if 0%{?rhel} < 8
 BuildRequires: libzip-devel >= 0.11
+%else
+BuildRequires: ea-libzip ea-libzip-devel
+Requires: ea-libzip
+%endif
 %endif
 %if %{with_dtrace}
 BuildRequires: python
@@ -437,7 +456,11 @@ Group: Development/Languages
 License: PHP
 Requires: %{?scl_prefix}php-common%{?_isa} = %{version}-%{release}
 Requires: %{?scl_prefix}php-cli%{?_isa} = %{version}-%{release}
+%if 0%{?rhel} >= 8
+Requires: libcurl >= %{libcurl_ver}
+%else
 Requires: %{ns_name}-libcurl >= %{ea_libcurl_ver}
+%endif
 BuildRequires: libssh2 libssh2-devel libidn libidn-devel ea-libnghttp2-devel
 Provides: %{?scl_prefix}php-curl = %{version}-%{release}, %{?scl_prefix}php-curl%{?_isa} = %{version}-%{release}
 
@@ -540,10 +563,17 @@ License: PHP
 Provides: %{?scl_prefix}php-imap%{?_isa} = %{version}-%{release}
 Requires: %{?scl_prefix}php-common%{?_isa} = %{version}-%{release}
 Requires: %{?scl_prefix}php-cli%{?_isa} = %{version}-%{release}
-Requires: %{?scl_prefix}libc-client%{?_isa}
 Requires: ea-openssl11 >= %{ea_openssl_ver}
 BuildRequires: krb5-devel%{?_isa}, ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}
+
+%if 0%{?rhel} >= 8
+Requires: %{?scl_prefix}libc-client
+BuildRequires: %{?scl_prefix}libc-client-devel
+%else
+Requires: %{?scl_prefix}libc-client%{?_isa}
 BuildRequires: %{?scl_prefix}libc-client-devel%{?_isa}
+%endif
+
 Conflicts: %{?scl_prefix}php-recode = %{version}-%{release}
 
 %description imap
@@ -949,8 +979,11 @@ Requires: %{?scl_prefix}php-common%{?_isa} = %{version}-%{release}
 Requires: %{?scl_prefix}php-cli%{?_isa} = %{version}-%{release}
 Provides: %{?scl_prefix}php-zip = %{version}-%{release}, %{?scl_prefix}php-zip%{?_isa} = %{version}-%{release}
 %if %{with_libzip}
+%if 0%{?rhel} >= 8
+%else
 # 0.11.1 required, but 1.0.1 is bundled
-BuildRequires: pkgconfig(libzip) >= 1.0.1
+BuildRequires: pkgconfig(ea-libzip) >= 1.0.1
+%endif
 %endif
 
 %description zip
@@ -1143,6 +1176,9 @@ EXTENSION_DIR=%{_libdir}/php/modules; export EXTENSION_DIR
 # includes the PEAR directory even though pear is packaged
 # separately.
 PEAR_INSTALLDIR=%{_datadir}/pear; export PEAR_INSTALLDIR
+%if 0%{?rhel} >= 8
+export XLDFLAGS=$LDFLAGS
+%endif
 
 # Shell function to configure and build a PHP tree.
 build() {
@@ -1159,8 +1195,12 @@ mkdir Zend && cp ../Zend/zend_{language,ini}_{parser,scanner}.[ch] Zend
 # openssl: for PHAR_SIG_OPENSSL
 # zlib: used by image
 
+%if 0%{?rhel} >= 8
+export LDFLAGS="$XLDFLAGS -Wl,-rpath-link,/lib64 -Wl,-rpath,/lib64"
+%endif
+
 ln -sf ../configure
-%configure \
+%configure  \
     --cache-file=../config.cache \
     --with-libdir=%{_lib} \
     --with-config-file-path=%{_sysconfdir} \
@@ -1252,7 +1292,11 @@ build --libdir=%{_libdir}/php \
       --enable-soap=shared \
       --with-xsl=shared,%{_root_prefix} \
       --enable-xmlreader=shared --enable-xmlwriter=shared \
+%if 0%{?rhel} >= 8
+      --with-curl=shared \
+%else
       --with-curl=shared,%{libcurl_prefix} \
+%endif
       --enable-pdo=shared \
       --with-pdo-odbc=shared,unixODBC,%{_root_prefix} \
       --with-pdo-mysql=shared,mysqlnd \
@@ -1268,7 +1312,11 @@ build --libdir=%{_libdir}/php \
       --enable-zip=shared \
 %endif
 %if %{with_libzip}
+%if 0%{?rhel} < 8
       --with-libzip \
+%else
+      --with-libzip=/opt/cpanel/ea-libzip \
+%endif
 %endif
       --without-readline \
 %if %{with_libedit}
@@ -1851,6 +1899,9 @@ fi
 
 
 %changelog
+* Mon Jun 29 2020 Julian Brown <julian.brown@cpanel.net> - 7.2.31-3
+- ZC-6875: Build on C8
+
 * Wed Jun 10 2020 Tim Mullin <tim@cpanel.net> - 7.2.31-2
 - EA-9087: Fix PHP version in DSO description
 
