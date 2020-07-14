@@ -1,4 +1,4 @@
-From dfce8177b92d114d85fbb834ae5cb5d7c7d6905a Mon Sep 17 00:00:00 2001
+From 8849d1a774d2a10c4a1bc8b7c21d16645af0a874 Mon Sep 17 00:00:00 2001
 From: Cory McIntire <cory@cpanel.net>
 Date: Fri, 2 Mar 2018 11:12:27 -0600
 Subject: [PATCH 08/12] Patch epoll.c per bug report in upstream.
@@ -27,5 +27,5 @@ index c7b4737..2bb8d31 100644
  		/* sanity check */
  		if (fpm_globals.parent_pid != getpid()) {
 -- 
-2.24.1
+2.25.1
 

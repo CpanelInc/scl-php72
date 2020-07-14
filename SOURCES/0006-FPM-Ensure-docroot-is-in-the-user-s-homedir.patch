@@ -1,4 +1,4 @@
-From dd001220aca921ba422d9408a9cf456018b193bb Mon Sep 17 00:00:00 2001
+From 8cc915921a81aaac431d783481bb8e76b6cc566f Mon Sep 17 00:00:00 2001
 From: Cory McIntire <cory@cpanel.net>
 Date: Fri, 2 Mar 2018 11:10:07 -0600
 Subject: [PATCH 06/12] FPM: Ensure docroot is in the user's homedir
@@ -38,5 +38,5 @@ index b0e6226..af050bf 100644
  		  if it is inside the docroot, we scan the tree up to the docroot
  			to find more user.ini, if not we only scan the current path.
 -- 
-2.24.1
+2.25.1
 
