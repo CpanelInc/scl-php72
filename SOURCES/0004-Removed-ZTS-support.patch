@@ -1,4 +1,4 @@
-From 2c74a9d3b3cbc0cdde8acaed51e0234114d5c3ac Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kurt Newman <kurt.newman@cpanel.net>
 Date: Fri, 11 Dec 2015 12:18:01 -0600
 Subject: [PATCH 04/12] Removed ZTS support
@@ -36,6 +36,3 @@ index 8879140..093f721 100644
    AC_MSG_RESULT(yes)
    PHP_SUBST(APXS)
  else
--- 
-2.25.1
-

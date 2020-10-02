@@ -1,4 +1,4 @@
-From c399ee9042eccaffbb1c5e540411480afaab1c4c Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Julian Brown <julian.brown@cpanel.net>
 Date: Tue, 7 May 2019 12:42:43 -0500
 Subject: [PATCH 12/12] 0022-PLESK-missed-kill
@@ -21,6 +21,3 @@ index a9136c7..2dec219 100644
  	fpm_event_add(&pctl_event, sec * 1000);
  	return 0;
  }
--- 
-2.25.1
-

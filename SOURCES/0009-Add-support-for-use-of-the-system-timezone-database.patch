@@ -1,4 +1,4 @@
-From f9418ee077cafc11de360a5601bf99238e1d471a Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Cory McIntire <cory@cpanel.net>
 Date: Fri, 2 Mar 2018 11:44:43 -0600
 Subject: [PATCH 09/12] Add support for use of the system timezone database
@@ -1372,6 +1372,3 @@ index 0000000..960e528
 +			return 0;
 +	}
 +}
--- 
-2.25.1
-
