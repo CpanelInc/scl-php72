@@ -1,4 +1,4 @@
-From d14697e1bf85aa8b600555d1bc79586e6e4abc68 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Cory McIntire <cory@cpanel.net>
 Date: Fri, 2 Mar 2018 11:01:25 -0600
 Subject: [PATCH 01/12] Modify recode to allow IMAP and recode to be
@@ -26,6 +26,3 @@ index 66df50e..4a3cd54 100644
  
    if test -n "$recode_conflict"; then
      AC_MSG_ERROR([recode extension can not be configured together with:$recode_conflict])
--- 
-2.25.1
-
