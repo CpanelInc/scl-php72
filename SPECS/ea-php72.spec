@@ -150,7 +150,7 @@ Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 Version:  7.2.34
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1197,6 +1197,8 @@ mkdir Zend && cp ../Zend/zend_{language,ini}_{parser,scanner}.[ch] Zend
 
 %if 0%{?rhel} >= 8
 export LDFLAGS="$XLDFLAGS -Wl,-rpath-link,/lib64 -Wl,-rpath,/lib64"
+%else
+export LDFLAGS="-Wl,-rpath=/opt/cpanel/ea-brotli/lib"
 %endif
 
 ln -sf ../configure
@@ -1899,6 +1901,9 @@ fi
 
 
 %changelog
+* Wed Oct 28 2020 Tim Mullin <tim@cpanel.net> - 7.2.34-2
+- EA-9390: Fix build with latest ea-brotli (v1.0.9)
+
 * Thu Oct 01 2020 Cory McIntire <cory@cpanel.net> - 7.2.34-1
 - EA-9338: Update scl-php72 from v7.2.33 to v7.2.34
 
