@@ -209,11 +209,7 @@ BuildRequires: pam-devel
 BuildRequires: libstdc++-devel, scl-utils-build
 
 %if 0%{?rhel} > 7
-#
-# We made a conscious decision to only use system openssl on C8.
-# See design doc:
-# https://enterprise.cpanel.net/projects/EA4/repos/ea-openssl11/DESIGN.md
-# 
+# In C8 we use system openssl. See DESIGN.md in ea-openssl11 git repo for details
 BuildRequires: openssl openssl-devel
 Requires: openssl
 %else
@@ -580,11 +576,7 @@ Requires: %{?scl_prefix}php-cli%{?_isa} = %{version}-%{release}
 BuildRequires: krb5-devel%{?_isa}
 
 %if 0%{?rhel} > 7
-#
-# We made a conscious decision to only use system openssl on C8.
-# See design doc:
-# https://enterprise.cpanel.net/projects/EA4/repos/ea-openssl11/DESIGN.md
-# 
+# In C8 we use system openssl. See DESIGN.md in ea-openssl11 git repo for details
 BuildRequires: openssl openssl-devel
 Requires: openssl
 %else
@@ -618,11 +610,7 @@ Requires: %{?scl_prefix}php-cli%{?_isa} = %{version}-%{release}
 BuildRequires: cyrus-sasl-devel, openldap-devel
 
 %if 0%{?rhel} > 7
-#
-# We made a conscious decision to only use system openssl on C8.
-# See design doc:
-# https://enterprise.cpanel.net/projects/EA4/repos/ea-openssl11/DESIGN.md
-# 
+# In C8 we use system openssl. See DESIGN.md in ea-openssl11 git repo for details
 BuildRequires: openssl openssl-devel
 Requires: openssl
 %else
@@ -703,11 +691,7 @@ Provides: %{?scl_prefix}php-pdo_pgsql = %{version}-%{release}, %{?scl_prefix}php
 BuildRequires: krb5-devel, postgresql-devel
 
 %if 0%{?rhel} > 7
-#
-# We made a conscious decision to only use system openssl on C8.
-# See design doc:
-# https://enterprise.cpanel.net/projects/EA4/repos/ea-openssl11/DESIGN.md
-# 
+# In C8 we use system openssl. See DESIGN.md in ea-openssl11 git repo for details
 BuildRequires: openssl openssl-devel
 Requires: openssl
 %else
