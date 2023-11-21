@@ -153,7 +153,7 @@ Vendor:   cPanel, Inc.
 Name:     %{?scl_prefix}php
 Version:  7.2.34
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4588 for more details
-%define release_prefix 8
+%define release_prefix 9
 Release:  %{release_prefix}%{?dist}.cpanel
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -198,6 +198,7 @@ Patch106: 0009-Add-support-for-use-of-the-system-timezone-database.patch
 Patch400: 0010-0020-PLESK-sig-block-reexec.patch
 Patch401: 0011-0021-PLESK-avoid-child-ignorance.patch
 Patch402: 0012-0022-PLESK-missed-kill.patch
+Patch403: 0013-Update-libxml-include-file-references.patch
 
 BuildRequires: bzip2-devel, %{db_devel}
 
@@ -1066,6 +1067,7 @@ perl -pi -e 's/-lt "64"/-lt "63"/' build/buildcheck.sh
 %patch400 -p1 -b .sigblock
 %patch401 -p1 -b .avoidchildignorance
 %patch402 -p1 -b .missedkill
+%patch403 -p1 -b .libxml
 
 # Prevent %%doc confusion over LICENSE files
 cp Zend/LICENSE Zend/ZEND_LICENSE
@@ -1948,6 +1950,9 @@ fi
 
 
 %changelog
+* Tue Nov 21 2023 Tim Mullin <tim@cpanel.net> - 7.2.34-9
+- EA-11821: Patch to build with the latest ea-libxml2
+
 * Tue Apr 04 2023 Julian Brown <julian.brown@cpanel.net> - 7.2.34-8
 - ZC-10873: Do not build on Ubuntu 22
 
